@@ -1,16 +1,14 @@
 {
   "files": {
-    "main.css": "/games/static/css/main.0177e247.css",
-    "main.js": "/games/static/js/main.1a41c593.js",
-    "static/js/787.bdc2d5e5.chunk.js": "/games/static/js/787.bdc2d5e5.chunk.js",
-    "static/media/logo.svg": "/games/static/media/logo.6ce24c58023cc2f8fd88fe9d219db6c6.svg",
+    "main.css": "/games/static/css/main.e58b65cb.css",
+    "main.js": "/games/static/js/main.2666a445.js",
+    "static/media/Tic-Tac-Toe.svg": "/games/static/media/Tic-Tac-Toe.98d6cca38ddca9aae27865c1bdabdacc.svg",
     "index.html": "/games/index.html",
-    "main.0177e247.css.map": "/games/static/css/main.0177e247.css.map",
-    "main.1a41c593.js.map": "/games/static/js/main.1a41c593.js.map",
-    "787.bdc2d5e5.chunk.js.map": "/games/static/js/787.bdc2d5e5.chunk.js.map"
+    "main.e58b65cb.css.map": "/games/static/css/main.e58b65cb.css.map",
+    "main.2666a445.js.map": "/games/static/js/main.2666a445.js.map"
   },
   "entrypoints": [
-    "static/css/main.0177e247.css",
-    "static/js/main.1a41c593.js"
+    "static/css/main.e58b65cb.css",
+    "static/js/main.2666a445.js"
   ]
 }
