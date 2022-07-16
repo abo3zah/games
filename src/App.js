@@ -1,25 +1,19 @@
-import logo from './logo.svg';
-import './App.css';
+import { Link } from "react-router-dom";
+import ticTacToe from "./routeSVGs/Tic-Tac-Toe.svg"
 
-function App() {
+export default function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div className="w-full h-full bg-slate-100">
+      <h1 className="text-2xl w-full text-center font-bold">🎮Games🎮</h1>
+      <div className="p-6 flex flex-wrap gap-3">
+        <Link to="/Tic-Tac-Toe" className="grid justify-center">
+            <img src={ticTacToe} className="App-logo" alt="logo" />
+            <span className="text-center">Tic-Tac-Toe</span>
+        </Link>
+        <Link to="/Number-Organizer" className="grid justify-center">
+            <span className="text-center">Number-Organizer</span>
+        </Link>
+      </div>
     </div>
   );
 }
-
-export default App;
