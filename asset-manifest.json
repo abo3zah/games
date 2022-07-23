@@ -1,14 +1,14 @@
 {
   "files": {
-    "main.css": "/games/static/css/main.e58b65cb.css",
-    "main.js": "/games/static/js/main.c72dc706.js",
+    "main.css": "/games/static/css/main.e89fb8e7.css",
+    "main.js": "/games/static/js/main.72ae1672.js",
     "static/media/Tic-Tac-Toe.svg": "/games/static/media/Tic-Tac-Toe.98d6cca38ddca9aae27865c1bdabdacc.svg",
     "index.html": "/games/index.html",
-    "main.e58b65cb.css.map": "/games/static/css/main.e58b65cb.css.map",
-    "main.c72dc706.js.map": "/games/static/js/main.c72dc706.js.map"
+    "main.e89fb8e7.css.map": "/games/static/css/main.e89fb8e7.css.map",
+    "main.72ae1672.js.map": "/games/static/js/main.72ae1672.js.map"
   },
   "entrypoints": [
-    "static/css/main.e58b65cb.css",
-    "static/js/main.c72dc706.js"
+    "static/css/main.e89fb8e7.css",
+    "static/js/main.72ae1672.js"
   ]
 }
