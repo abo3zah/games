@@ -4,11 +4,11 @@ import { Link } from "react-router-dom";
 function Square(props){
   let squareWidth = 40; 
   let squareHeight = 40; 
-  let barHeight = 16;
+  let barHeight = 20;
   let fontSize = 16;
 
   return(
-    <g transform={`translate(${props.randomX*(300-squareWidth)} ${props.randomY*(300-squareHeight-barHeight)+barHeight})`} onClick ={props.onClick} className={`cursor-pointer select-none hover:brightness-110 ${props.checked && "hidden "}`}>
+    <g transform={`translate(${props.randomX*(props.SVGWidth-(2*props.padding)-squareWidth)} ${props.randomY*(props.SVGHeight-(2*props.padding)-squareHeight-barHeight)+barHeight})`} onClick ={props.onClick} className={`cursor-pointer select-none hover:brightness-110 transition-all ease-linear duration-300 ${props.checked && ` scale-50 z-[${10*props.value}]`}`}>
       <rect width={`${squareWidth}px`} height={`${squareHeight}px`} fill={"rgb(253, 186, 116)"} rx={"5"} stroke={'black'} strokeWidth={'2px'}  />
       <text textAnchor={"middle"} fontSize={`${fontSize}px`} dy={`${fontSize+(squareHeight/4)}`} dx={`${squareWidth/2-1}`} fill={'white'}>{props.value}</text>
     </g>
@@ -17,24 +17,35 @@ function Square(props){
 
 function GameOver(props){
   let fontSize = 30;
-  let squareWidth = 300;
-  let squareHeight = 300;
+  let xShift = props.SVGWidth/5;
 
   return(
-    <g transform={`translate(${squareWidth/2} ${squareHeight/3})`} className={`select-none`}>
-      <rect fill={'white'} width="200px" height="50px" x={`-${squareWidth/3}px`} y={`-${fontSize+3}px`} rx='5px' stroke={'black'} />
-      <text textAnchor={"middle"} fontSize={`${fontSize}px`} fill={'black'}>{props.gameStatus}</text>
+    <g transform={`translate(${props.SVGWidth/2} ${props.SVGHeight/4})`} className={`select-none`}>
+      <rect fill={'white'} width={`${props.SVGWidth-xShift}px`} height={`${fontSize*1.8}px`} x={`${-props.SVGWidth/2 + xShift/2}px`} y={`${0}px`} rx='5px' stroke={'black'} />
+      <text textAnchor={"middle"} y={`${fontSize*1.2}`} fontSize={`${fontSize}px`} fill={'black'}>{props.gameStatus}</text>
     </g>
   )
 }
 
 class Board extends React.Component{
   renderSquare(i){
-    return <Square value={i} onClick={()=> this.props.onClick(i)} randomX={this.props.randomX[i-1]} randomY={this.props.randomY[i-1]} checked={this.props.checked[i-1]} />
+    return <Square 
+              value={i}
+              onClick={()=> this.props.onClick(i)}
+              randomX={this.props.randomX[i-1]}
+              randomY={this.props.randomY[i-1]}
+              SVGHeight = {this.props.SVGHeight}
+              SVGWidth = {this.props.SVGWidth}
+              padding = {this.props.padding}
+              checked={this.props.checked[i-1]} />
   }
 
   renderGameOver(gameStatus){
-    return <GameOver gameStatus={gameStatus} />
+    return <GameOver 
+              SVGHeight = {this.props.SVGHeight}
+              SVGWidth = {this.props.SVGWidth}
+              padding = {this.props.padding}
+              gameStatus={gameStatus} />
   }
 
   render(){
@@ -55,7 +66,7 @@ class Board extends React.Component{
 
     return(
       <React.Fragment>
-        <text dy={'16px'}>{countStrike}</text>
+        <text dy={'16px'} x={`${this.props.SVGWidth-this.props.padding-(16*this.props.countStrike)-20}px`}>{countStrike}</text>
         {squares}
       </React.Fragment>
     )
@@ -66,13 +77,16 @@ export class NumbersOrganizer extends React.Component{
   constructor(props){
     super(props);
     this.state = {
-      lastNumber:3,
+      lastNumber:10,
       countStrike:0,
       currentReading:1,
-      randomX: Array.from({length: 3}, () => Math.random()),
-      randomY: Array.from({length: 3}, () => Math.random()),
-      checked: Array.from({length: 3}, () => false),
+      randomX: Array.from({length: 10}, () => Math.random()),
+      randomY: Array.from({length: 10}, () => Math.random()),
+      checked: Array.from({length: 10}, () => false),
       gameFinished:false,
+      SVGWidth:300,
+      SVGHeight:400,
+      padding:4,
     }
   }
 
@@ -95,12 +109,27 @@ export class NumbersOrganizer extends React.Component{
 
     }
   }
+
+  resetClick(){
+    this.setState({
+      lastNumber:10,
+      countStrike:0,
+      currentReading:1,
+      randomX: Array.from({length: 10}, () => Math.random()),
+      randomY: Array.from({length: 10}, () => Math.random()),
+      checked: Array.from({length: 10}, () => false),
+      gameFinished:false,
+    });
+  }
   
   render(){
       return(
-          <div className='w-full grid justify-center items-center h-full'>
-            <svg width={"300px"} height={"300px"} className='bg-gray-300 rounded outline outline-black'>
+          <div className='w-full grid justify-center content-center h-full gap-3'>
+            <svg width={`${this.state.SVGWidth}px`} height={`${this.state.SVGHeight}px`} className={`bg-gray-300 rounded outline outline-black p-[${this.state.padding}px]`}>
                 <Board 
+                  SVGWidth = {this.state.SVGWidth}
+                  SVGHeight = {this.state.SVGHeight}
+                  padding = {this.state.padding}
                   lastNumber={this.state.lastNumber}
                   onClick = {(i) => this.handleClick(i)}
                   randomX = {this.state.randomX} 
@@ -111,6 +140,7 @@ export class NumbersOrganizer extends React.Component{
                   currentReading = {this.state.currentReading}
                 />
             </svg>
+            <button className='border border-black h-10 bg-sky-700 rounded hover:bg-sky-600 active:bg-sky-500 text-white' onClick={() => this.resetClick()}>RESTART</button>
             <Link to="/" className="text-center self-start w-full bg-slate-100 border border-black rounded">
               🔙 Back
             </Link>

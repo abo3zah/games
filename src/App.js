@@ -11,7 +11,7 @@ export default function App() {
             <span className="text-center">Tic-Tac-Toe</span>
         </Link>
         <Link to="/Number-Organizer" className="grid justify-center">
-            <span className="text-center">Number-Organizer</span>
+            <span className="text-center">Organize Numbers</span>
         </Link>
       </div>
     </div>
