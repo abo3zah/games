@@ -8,9 +8,9 @@ function Square(props){
   let fontSize = 16;
 
   return(
-    <g transform={`translate(${props.randomX*(props.SVGWidth-(2*props.padding)-squareWidth)} ${props.randomY*(props.SVGHeight-(2*props.padding)-squareHeight-barHeight)+barHeight})`} onClick ={props.onClick} className={`cursor-pointer select-none hover:brightness-110 transition-all ease-linear duration-300 ${props.checked && ` scale-50 z-[${10*props.value}]`}`}>
-      <rect width={`${squareWidth}px`} height={`${squareHeight}px`} fill={"rgb(253, 186, 116)"} rx={"5"} stroke={'black'} strokeWidth={'2px'}  />
-      <text textAnchor={"middle"} fontSize={`${fontSize}px`} dy={`${fontSize+(squareHeight/4)}`} dx={`${squareWidth/2-1}`} fill={'white'}>{props.value}</text>
+    <g transform={`translate(${props.randomX*(props.SVGWidth-(2*props.padding)-squareWidth)} ${props.randomY*(props.SVGHeight-(2*props.padding)-squareHeight-barHeight)+barHeight})`} onClick ={props.onClick} className={`cursor-pointer select-none hover:brightness-105 transition-all ease-linear duration-300 ${props.checked && ` scale-50 z-[${10*props.value}]`}`}>
+      <rect width={`${squareWidth}px`} height={`${squareHeight}px`} fill={"rgb(253, 170, 110)"} rx={"5"} stroke={'white'} strokeWidth={'0.5px'}  />
+      <text textAnchor={"middle"} fontSize={`${fontSize}px`} dy={`${fontSize+(squareHeight/4)}`} dx={`${squareWidth/2-1}`} fill={'white'}>{props.checked ? props.currentReading - 1 : props.value}</text>
     </g>
   )
 }
@@ -28,8 +28,10 @@ function GameOver(props){
 }
 
 class Board extends React.Component{
+
   renderSquare(i){
     return <Square 
+              key={i.toString()}
               value={i}
               onClick={()=> this.props.onClick(i)}
               randomX={this.props.randomX[i-1]}
@@ -37,7 +39,8 @@ class Board extends React.Component{
               SVGHeight = {this.props.SVGHeight}
               SVGWidth = {this.props.SVGWidth}
               padding = {this.props.padding}
-              checked={this.props.checked[i-1]} />
+              checked={this.props.checked[i-1]}
+              currentReading = {this.props.currentReading} />
   }
 
   renderGameOver(gameStatus){
@@ -66,7 +69,7 @@ class Board extends React.Component{
 
     return(
       <React.Fragment>
-        <text dy={'16px'} x={`${this.props.SVGWidth-this.props.padding-(16*this.props.countStrike)-20}px`}>{countStrike}</text>
+        <text dy={'16px'} x={`${this.props.SVGWidth-this.props.padding-(22*this.props.countStrike)}px`}>{countStrike}</text>
         {squares}
       </React.Fragment>
     )
@@ -124,8 +127,8 @@ export class NumbersOrganizer extends React.Component{
   
   render(){
       return(
-          <div className='w-full grid justify-center content-center h-full gap-3'>
-            <svg width={`${this.state.SVGWidth}px`} height={`${this.state.SVGHeight}px`} className={`bg-gray-300 rounded outline outline-black p-[${this.state.padding}px]`}>
+          <div className='w-full grid justify-center content-center h-full gap-3 select-none'>
+            <svg width={`${this.state.SVGWidth}px`} height={`${this.state.SVGHeight}px`} className={`bg-gray-300 rounded border-black border-2 p-[${this.state.padding}px]`}>
                 <Board 
                   SVGWidth = {this.state.SVGWidth}
                   SVGHeight = {this.state.SVGHeight}

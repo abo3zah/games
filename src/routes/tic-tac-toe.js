@@ -136,7 +136,7 @@ export class TicTacToe extends React.Component{
       }
   
       return(
-          <div className='w-full grid justify-center items-center h-full'>
+          <div className='w-full grid justify-center content-center h-full gap-3 select-none'>
             <div className='p-6 grid justify-items-stretch align-middle w-80 bg-gray-50 gap-3 rounded outline outline-black'>
                 <div className='text-center text-3xl w-full bg-cyan-600 text-white rounded p-3'>{status}</div>
                 <div className=''>
