@@ -1,5 +1,5 @@
 import React from 'react';
-import { Link } from "react-router-dom";
+import { ReturnButton } from './commonComponent';
 
 function Square(props){
   let squareWidth = 40; 
@@ -93,6 +93,10 @@ export class NumbersOrganizer extends React.Component{
     }
   }
 
+  renderReturnButton(){
+    return <ReturnButton />
+  }
+
   handleClick(i){
     let checked = this.state.checked.slice();
     let countStrike = this.state.countStrike;
@@ -144,9 +148,7 @@ export class NumbersOrganizer extends React.Component{
                 />
             </svg>
             <button className='border border-black h-10 bg-sky-700 rounded hover:bg-sky-600 active:bg-sky-500 text-white' onClick={() => this.resetClick()}>RESTART</button>
-            <Link to="/" className="text-center self-start w-full bg-slate-100 border border-black rounded">
-              🔙 Back
-            </Link>
+            {this.renderReturnButton()}
         </div>
       )
   }

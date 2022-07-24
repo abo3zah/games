@@ -1,5 +1,5 @@
 import React from 'react';
-import { Link } from "react-router-dom";
+import { ReturnButton } from './commonComponent';
 
 function Square(props) {
 
@@ -117,6 +117,10 @@ export class TicTacToe extends React.Component{
         count:9,
       });
     }
+
+    renderReturnButton(){
+      return <ReturnButton />
+    }
   
     render(){
       const history = this.state.history;
@@ -154,9 +158,7 @@ export class TicTacToe extends React.Component{
                   <button className='bg-blue-500 text-white align-middle disabled:bg-gray-400 px-2 text-lg rounded' disabled={this.state.stepNumber === (this.state.history.length - 1) ? true : false} onClick={() => this.jumpTo(this.state.stepNumber+1)}>&#8594;</button>
                 </div>
             </div>
-            <Link to="/" className="text-center self-start w-full bg-slate-100 border border-black rounded">
-              🔙 Back
-            </Link>
+            {this.renderReturnButton()}
           </div>
       );
     }
