@@ -55,6 +55,9 @@ export class TicTacToe extends React.Component{
           xIsNext:true,
           stepNumber: 0,
           count:9,
+          xWin:0,
+          oWin:0,
+          winnerExists:false,
       }
     }
   
@@ -115,6 +118,7 @@ export class TicTacToe extends React.Component{
         xIsNext:true,
         stepNumber: 0,
         count:9,
+        winnerExists:false,
       });
     }
 
@@ -128,9 +132,18 @@ export class TicTacToe extends React.Component{
       const winner = calculateWinner(current.squares);
   
       let status;
-  
+      
       if (winner){
         status = '🎊 Winner: ' + winner[0] + ' 🎊';
+
+        if(!this.state.winnerExists){
+          this.setState({
+            xWin: winner[0] === 'X' ? this.state.xWin + 1: this.state.xWin,
+            oWin: winner[0] === 'O' ? this.state.oWin + 1: this.state.oWin,
+            winnerExists: true,
+          });
+        }
+
       } else {
         if (this.state.count <= 0 ){
           status = 'Draw'
@@ -142,15 +155,20 @@ export class TicTacToe extends React.Component{
       return(
           <div className='w-full grid justify-center content-center h-full gap-3 select-none'>
             <div className='p-6 grid justify-items-stretch align-middle w-80 bg-gray-50 gap-3 rounded outline outline-black'>
-                <div className='text-center text-3xl w-full bg-cyan-600 text-white rounded p-3'>{status}</div>
+              <div className='grid grid-cols-2 justify-center items-center w-full px-3 bg-gray-200 rounded border border-black'>
+                <span className='text-3xl font-bold col-span-full text-center'>Wins</span>
+                <span className='text-2xl'><b>X : </b>{this.state.xWin}</span>
+                <span className='text-right text-2xl'><b>O : </b>{this.state.oWin}</span>
+              </div>
+              <div className='text-center text-3xl w-full bg-cyan-600 text-white rounded p-3'>{status}</div>
                 <div className=''>
-                    <Board
-                      squares = {current.squares}
-                      onClick = {(i) => this.handleClick(i)}
-                      squaresBackground = {this.state.squaresBackground}
-                      resetCmd = {() => this.resetClick()}
-                      move = {current.move}
-                    />
+                  <Board
+                    squares = {current.squares}
+                    onClick = {(i) => this.handleClick(i)}
+                    squaresBackground = {this.state.squaresBackground}
+                    resetCmd = {() => this.resetClick()}
+                    move = {current.move}
+                  />
                 </div>
                 <div className='flex gap-1 outline outline-1 outline-offset-1 outline-black rounded'>
                   <button className='bg-blue-500 text-white align-middle disabled:bg-gray-400 px-2 text-lg rounded' disabled={this.state.stepNumber === 0? true : false} onClick={() => this.jumpTo(this.state.stepNumber-1)}>&#8592;</button>
