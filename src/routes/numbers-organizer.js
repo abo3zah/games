@@ -1,75 +1,80 @@
-import React from 'react';
+import React, { createContext, useContext } from 'react';
 import { ReturnButton } from './commonComponent';
 
+const StateContext = createContext({}); 
+
+const SVGDimensions = {
+  width: 300,
+  height: 400,
+  padding: 4
+}
+
 function Square(props){
-  let squareWidth = 40; 
-  let squareHeight = 40; 
-  let barHeight = 20;
+  let squareSideLength = 40; 
+  let barHeight = 30;
   let fontSize = 16;
 
+  const stateCotext = useContext(StateContext);
+  let locationX = stateCotext.random.X[props.value-1];
+  let locationY = stateCotext.random.Y[props.value-1];
+  let checked = stateCotext.random.checked[props.value-1];
+  let currentReading = stateCotext.currentReading;
+
   return(
-    <g transform={`translate(${props.randomX*(props.SVGWidth-(2*props.padding)-squareWidth)} ${props.randomY*(props.SVGHeight-(2*props.padding)-squareHeight-barHeight)+barHeight})`} onClick ={props.onClick} className={`cursor-pointer select-none hover:brightness-105 transition-all ease-linear duration-300 ${props.checked && ` scale-50 z-[${10*props.value}]`}`}>
-      <rect width={`${squareWidth}px`} height={`${squareHeight}px`} fill={"rgb(253, 170, 110)"} rx={"5"} stroke={'white'} strokeWidth={'0.5px'}  />
-      <text textAnchor={"middle"} fontSize={`${fontSize}px`} dy={`${fontSize+(squareHeight/4)}`} dx={`${squareWidth/2-1}`} fill={'white'}>{props.checked ? props.currentReading - 1 : props.value}</text>
+    <g transform={`translate(${checked?0:locationX*(SVGDimensions.width-(2*SVGDimensions.padding)-squareSideLength)} ${checked?0:locationY*(SVGDimensions.height-(2*SVGDimensions.padding)-squareSideLength-barHeight)+barHeight})`} onClick ={props.onClick} className={`transition-all ease-linear duration-300 ${!checked && "hover:brightness-75 cursor-pointer"}`}>
+      <rect width={`${!checked?squareSideLength:barHeight}px`} height={`${!checked?squareSideLength:barHeight}px`} fill={`${checked?"#FF6900":"#0096FF"}`} rx={"5"} stroke={'gray'} strokeWidth={'0.5px'}  />
+      <text textAnchor={"middle"} fontSize={`${fontSize/(checked?squareSideLength/barHeight:1)}px`} dy={`${(fontSize+(squareSideLength/4))/(checked?squareSideLength/barHeight:1)}`} dx={`${(squareSideLength/2-1)/(checked?squareSideLength/barHeight:1)}`} fill={'white'} fontWeight={'bold'}>{checked?currentReading-1:props.value}</text>
     </g>
   )
 }
 
 function GameOver(props){
   let fontSize = 30;
-  let xShift = props.SVGWidth/5;
+  let xShift = SVGDimensions.width/5;
 
   return(
-    <g transform={`translate(${props.SVGWidth/2} ${props.SVGHeight/4})`} className={`select-none`}>
-      <rect fill={'white'} width={`${props.SVGWidth-xShift}px`} height={`${fontSize*1.8}px`} x={`${-props.SVGWidth/2 + xShift/2}px`} y={`${0}px`} rx='5px' stroke={'black'} />
+    <g transform={`translate(${SVGDimensions.width/2} ${SVGDimensions.height/4})`} className={`select-none`}>
+      <rect fill={'white'} width={`${SVGDimensions.width-xShift}px`} height={`${fontSize*1.8}px`} x={`${-SVGDimensions.width/2 + xShift/2}px`} y={`${0}px`} rx='5px' stroke={'black'} />
       <text textAnchor={"middle"} y={`${fontSize*1.2}`} fontSize={`${fontSize}px`} fill={'black'}>{props.gameStatus}</text>
     </g>
   )
 }
 
 class Board extends React.Component{
+  static contextType = StateContext;
 
   renderSquare(i){
-    return <Square 
-              key={i.toString()}
-              value={i}
-              onClick={()=> this.props.onClick(i)}
-              randomX={this.props.randomX[i-1]}
-              randomY={this.props.randomY[i-1]}
-              SVGHeight = {this.props.SVGHeight}
-              SVGWidth = {this.props.SVGWidth}
-              padding = {this.props.padding}
-              checked={this.props.checked[i-1]}
-              currentReading = {this.props.currentReading} />
+    return <Square key={i.toString()} value={i} onClick={()=> this.props.onClick(i)} />
   }
 
   renderGameOver(gameStatus){
-    return <GameOver 
-              SVGHeight = {this.props.SVGHeight}
-              SVGWidth = {this.props.SVGWidth}
-              padding = {this.props.padding}
-              gameStatus={gameStatus} />
+    return <GameOver gameStatus={gameStatus} />
   }
 
   render(){
     let squares = [];
-    let countStrike;
-    let gameStatus;
+    let countStrike = this.context.countStrike;
+    let gameStatus = this.context.gameStatus;
+    let lastNumber = this.context.lastNumber;
+    let currentReading = this.context.currentReading;
+    let gameFinished = this.context.gameFinished;
+    let strikeText;
 
-    if (this.props.gameFinished === false){
-      countStrike = Array.from({length: this.props.countStrike}, () => '❌').join('');
-      for(let i = this.props.lastNumber; i > 0; i--){
+
+    if (!gameFinished){
+      strikeText = '❌'.repeat(countStrike);
+      for(let i = lastNumber; i > 0; i--){
         squares.push(this.renderSquare(i));
       }
     } else {
-      countStrike = "";
-      gameStatus = this.props.currentReading === this.props.lastNumber? "🙌You Won🙌" : "😭You Lost😭" 
+      strikeText = "";
+      gameStatus = currentReading === lastNumber? "🙌You Won🙌" : "😭You Lost😭" 
       squares = this.renderGameOver(gameStatus);
     }
 
     return(
       <React.Fragment>
-        <text dy={'16px'} x={`${this.props.SVGWidth-this.props.padding-(22*this.props.countStrike)}px`}>{countStrike}</text>
+        <text dy={'16px'} x={`${SVGDimensions.width-SVGDimensions.padding-(22*countStrike)}px`}>{strikeText}</text>
         {squares}
       </React.Fragment>
     )
@@ -83,9 +88,11 @@ export class NumbersOrganizer extends React.Component{
       lastNumber:10,
       countStrike:0,
       currentReading:1,
-      randomX: Array.from({length: 10}, () => Math.random()),
-      randomY: Array.from({length: 10}, () => Math.random()),
-      checked: Array.from({length: 10}, () => false),
+      random:{
+        X: Array.from({length: 10}, () => Math.random()),
+        Y: Array.from({length: 10}, () => Math.random()),
+        checked: Array.from({length: 10}, () => false)
+      },
       gameFinished:false,
       SVGWidth:300,
       SVGHeight:400,
@@ -98,58 +105,65 @@ export class NumbersOrganizer extends React.Component{
   }
 
   handleClick(i){
-    let checked = this.state.checked.slice();
+    let checked = this.state.random.checked.slice();
     let countStrike = this.state.countStrike;
     if (this.state.currentReading===i){
       checked[i-1] = true;
       this.setState({
         currentReading:i===this.state.lastNumber?i:i+1,
-        checked:checked,
+        random:{ ...this.state.random, checked },
         gameFinished:i===this.state.lastNumber,
       })
     } else {
       countStrike += 1;
       this.setState({
-        countStrike:countStrike,
+        countStrike,
         gameFinished:countStrike===3,
       })
 
     }
   }
 
-  resetClick(){
+  changeLastNumber(e){
     this.setState({
-      lastNumber:10,
+      lastNumber:parseInt(e.target.value),
+      random:{
+        X: Array.from({length: e.target.value}, () => Math.random()),
+        Y: Array.from({length: e.target.value}, () => Math.random()),
+        checked: Array.from({length: e.target.value}, () => false)
+      },
+    })
+    this.resetClick(e.target.value);
+  }
+
+  resetClick(lastNumber = 10){
+    this.setState({
       countStrike:0,
       currentReading:1,
-      randomX: Array.from({length: 10}, () => Math.random()),
-      randomY: Array.from({length: 10}, () => Math.random()),
-      checked: Array.from({length: 10}, () => false),
+      random:{
+        X: Array.from({length: lastNumber}, () => Math.random()),
+        Y: Array.from({length: lastNumber}, () => Math.random()),
+        checked: Array.from({length: lastNumber}, () => false)
+      },
       gameFinished:false,
     });
   }
-  
+
   render(){
-      return(
-          <div className='w-full grid justify-center content-center h-full gap-3 select-none'>
-            <svg width={`${this.state.SVGWidth}px`} height={`${this.state.SVGHeight}px`} className={`bg-gray-300 rounded border-black border-2 p-[${this.state.padding}px]`}>
-                <Board 
-                  SVGWidth = {this.state.SVGWidth}
-                  SVGHeight = {this.state.SVGHeight}
-                  padding = {this.state.padding}
-                  lastNumber={this.state.lastNumber}
-                  onClick = {(i) => this.handleClick(i)}
-                  randomX = {this.state.randomX} 
-                  randomY = {this.state.randomY}
-                  checked = {this.state.checked}
-                  countStrike = {this.state.countStrike}
-                  gameFinished = {this.state.gameFinished}
-                  currentReading = {this.state.currentReading}
-                />
-            </svg>
-            <button className='border border-black h-10 bg-sky-700 rounded hover:bg-sky-600 active:bg-sky-500 text-white' onClick={() => this.resetClick()}>RESTART</button>
-            {this.renderReturnButton()}
-        </div>
-      )
+    return(
+        <div className='w-full grid justify-center content-center h-full gap-3 select-none'>
+          <div className='w-full grid content-center gap-1 select-none'>
+            <label className={'w-full text-center bg-gray-200 font-bold rounded'}>Count</label>
+            <input type="range" min="1" max="40" value={this.state.lastNumber} onChange={(e)=>this.changeLastNumber(e)} className={`border border-black w-full text-center rounded`} />
+          </div>
+          <svg width={`${SVGDimensions.width}px`} height={`${SVGDimensions.height}px`} className={`bg-gray-50 rounded border-black border-2 p-[${SVGDimensions.padding}px]`}>
+              <StateContext.Provider value={this.state}>
+                <Board onClick = {(i) => this.handleClick(i)} />
+              </StateContext.Provider>
+          </svg>
+          <button className='border border-black h-10 bg-sky-700 rounded hover:bg-sky-600 active:bg-sky-500 text-white' onClick={() => this.resetClick()}>RESTART</button>
+          {this.renderReturnButton()}
+      </div>
+    )
   }
 }
