@@ -1,5 +1,5 @@
 import React from 'react';
-import { ReturnButton } from './commonComponent';
+import { ReturnButton, arabicNumberCode } from './commonComponent';
 
 function Square(props) {
 
@@ -36,7 +36,7 @@ class Board extends React.Component{
               {this.renderSquare(7)}
               {this.renderSquare(8)}
           </div>
-          <button className='border border-black h-10 bg-sky-700 rounded hover:bg-sky-600 active:bg-sky-500 text-white' onClick={() => this.props.resetCmd()}>RESTART</button>
+          <button className='border border-black h-10 bg-sky-700 rounded hover:bg-sky-600 active:bg-sky-500 text-white' onClick={() => this.props.resetCmd()}>إعادة اللعبة</button>
       </div>
     );
   }
@@ -134,7 +134,7 @@ export class TicTacToe extends React.Component{
       let status;
       
       if (winner){
-        status = '🎊 Winner: ' + winner[0] + ' 🎊';
+        status = '🎊 الفائز: ' + winner[0] + ' 🎊';
 
         if(!this.state.winnerExists){
           this.setState({
@@ -146,9 +146,9 @@ export class TicTacToe extends React.Component{
 
       } else {
         if (this.state.count <= 0 ){
-          status = 'Draw'
+          status = 'تعادل'
         }else{
-          status = 'Next Player: ' + (this.state.xIsNext? 'X' : 'O');
+          status = 'دور اللاعب: ' + (this.state.xIsNext? 'X' : 'O');
         }
       }
   
@@ -156,9 +156,9 @@ export class TicTacToe extends React.Component{
           <div className='w-full grid justify-center content-center h-full gap-3 select-none'>
             <div className='p-6 grid justify-items-stretch align-middle w-80 bg-gray-50 gap-3 rounded outline outline-black'>
               <div className='grid grid-cols-2 justify-center items-center w-full px-3 bg-gray-200 rounded border border-black'>
-                <span className='text-3xl font-bold col-span-full text-center'>Wins</span>
-                <span className='text-2xl'><b>X : </b>{this.state.xWin}</span>
-                <span className='text-right text-2xl'><b>O : </b>{this.state.oWin}</span>
+                <span className='text-3xl font-bold col-span-full text-center'>النتائج</span>
+                <span className='text-2xl text-right'><b>X : </b>{this.state.xWin.toString().replace(/\d(?=[^<>]*(<|$))/g,(x)=> String.fromCharCode(arabicNumberCode[x]))}</span>
+                <span className='text-left text-2xl'><b>O : </b>{this.state.oWin.toString().replace(/\d(?=[^<>]*(<|$))/g,(x)=> String.fromCharCode(arabicNumberCode[x]))}</span>
               </div>
               <div className='text-center text-3xl w-full bg-cyan-600 text-white rounded p-3'>{status}</div>
                 <div className=''>
@@ -171,9 +171,9 @@ export class TicTacToe extends React.Component{
                   />
                 </div>
                 <div className='flex gap-1 outline outline-1 outline-offset-1 outline-black rounded'>
-                  <button className='bg-blue-500 text-white align-middle disabled:bg-gray-400 px-2 text-lg rounded' disabled={this.state.stepNumber === 0? true : false} onClick={() => this.jumpTo(this.state.stepNumber-1)}>&#8592;</button>
-                  <span className='flex-grow text-center'>{this.state.stepNumber === 0? 'Waiting': ('Move# ' + this.state.stepNumber)}</span>
-                  <button className='bg-blue-500 text-white align-middle disabled:bg-gray-400 px-2 text-lg rounded' disabled={this.state.stepNumber === (this.state.history.length - 1) ? true : false} onClick={() => this.jumpTo(this.state.stepNumber+1)}>&#8594;</button>
+                  <button className='bg-blue-500 text-white align-middle disabled:bg-gray-400 px-2 text-lg rounded' disabled={this.state.stepNumber === 0? true : false} onClick={() => this.jumpTo(this.state.stepNumber-1)}>&#8594;</button>
+                  <span className='flex-grow text-center'>{this.state.stepNumber === 0? '-': ('الدور# ' + this.state.stepNumber.toString().replace(/\d(?=[^<>]*(<|$))/g,(x)=> String.fromCharCode(arabicNumberCode[x])))}</span>
+                  <button className='bg-blue-500 text-white align-middle disabled:bg-gray-400 px-2 text-lg rounded' disabled={this.state.stepNumber === (this.state.history.length - 1) ? true : false} onClick={() => this.jumpTo(this.state.stepNumber+1)}>&#8592;</button>
                 </div>
             </div>
             {this.renderReturnButton()}

@@ -1,5 +1,5 @@
 import React, { createContext, useContext } from 'react';
-import { ReturnButton } from './commonComponent';
+import { ReturnButton, arabicNumberCode } from './commonComponent';
 
 const StateContext = createContext({}); 
 
@@ -23,13 +23,13 @@ function Square(props){
   return(
     <g transform={`translate(${checked?0:locationX*(SVGDimensions.width-(2*SVGDimensions.padding)-squareSideLength)} ${checked?0:locationY*(SVGDimensions.height-(2*SVGDimensions.padding)-squareSideLength-barHeight)+barHeight})`} onClick ={props.onClick} className={`transition-all ease-linear duration-300 ${!checked && "hover:brightness-75 cursor-pointer"}`}>
       <rect width={`${!checked?squareSideLength:barHeight}px`} height={`${!checked?squareSideLength:barHeight}px`} fill={`${checked?"#FF6900":"#0096FF"}`} rx={"5"} stroke={'gray'} strokeWidth={'0.5px'}  />
-      <text textAnchor={"middle"} fontSize={`${fontSize/(checked?squareSideLength/barHeight:1)}px`} dy={`${(fontSize+(squareSideLength/4))/(checked?squareSideLength/barHeight:1)}`} dx={`${(squareSideLength/2-1)/(checked?squareSideLength/barHeight:1)}`} fill={'white'} fontWeight={'bold'}>{checked?currentReading-1:props.value}</text>
+      <text textAnchor={"middle"} fontSize={`${fontSize/(checked?squareSideLength/barHeight:1)}px`} dy={`${(fontSize+(squareSideLength/4))/(checked?squareSideLength/barHeight:1)}`} dx={`${(squareSideLength/2-1)/(checked?squareSideLength/barHeight:1)}`} fill={'white'} fontWeight={'bold'}>{checked?(currentReading-1).toString().replace(/\d(?=[^<>]*(<|$))/g,(x)=> String.fromCharCode(arabicNumberCode[x])):props.value.toString().replace(/\d(?=[^<>]*(<|$))/g,(x)=> String.fromCharCode(arabicNumberCode[x]))}</text>
     </g>
   )
 }
 
 function GameOver(props){
-  let fontSize = 30;
+  let fontSize = 24;
   let xShift = SVGDimensions.width/5;
 
   return(
@@ -68,13 +68,13 @@ class Board extends React.Component{
       }
     } else {
       strikeText = "";
-      gameStatus = currentReading === lastNumber? "🙌You Won🙌" : "😭You Lost😭" 
+      gameStatus = currentReading === lastNumber? "🙌مبروووك🙌" : "😭حاول مرة أخرى😭" 
       squares = this.renderGameOver(gameStatus);
     }
 
     return(
       <React.Fragment>
-        <text dy={'16px'} x={`${SVGDimensions.width-SVGDimensions.padding-(22*countStrike)}px`}>{strikeText}</text>
+        <text dy={'16px'} x={`${SVGDimensions.width-SVGDimensions.padding-(countStrike)}px`}>{strikeText}</text>
         {squares}
       </React.Fragment>
     )
@@ -153,7 +153,7 @@ export class NumbersOrganizer extends React.Component{
     return(
         <div className='w-full grid justify-center content-center h-full gap-3 select-none'>
           <div className='w-full grid content-center gap-1 select-none'>
-            <label className={'w-full text-center bg-gray-200 font-bold rounded'}>Count</label>
+            <label className={'w-full text-center bg-gray-200 font-bold rounded'}>العد إلى {this.state.lastNumber.toString().replace(/\d(?=[^<>]*(<|$))/g,(x)=> String.fromCharCode(arabicNumberCode[x]))}</label>
             <input type="range" min="1" max="40" value={this.state.lastNumber} onChange={(e)=>this.changeLastNumber(e)} className={`border border-black w-full text-center rounded`} />
           </div>
           <svg width={`${SVGDimensions.width}px`} height={`${SVGDimensions.height}px`} className={`bg-gray-50 rounded border-black border-2 p-[${SVGDimensions.padding}px]`}>
@@ -161,7 +161,7 @@ export class NumbersOrganizer extends React.Component{
                 <Board onClick = {(i) => this.handleClick(i)} />
               </StateContext.Provider>
           </svg>
-          <button className='border border-black h-10 bg-sky-700 rounded hover:bg-sky-600 active:bg-sky-500 text-white' onClick={() => this.resetClick()}>RESTART</button>
+          <button className='border border-black h-10 bg-sky-700 rounded hover:bg-sky-600 active:bg-sky-500 text-white' onClick={() => this.resetClick()}>إعادة اللعبة</button>
           {this.renderReturnButton()}
       </div>
     )
