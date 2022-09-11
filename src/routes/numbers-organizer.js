@@ -136,7 +136,8 @@ export class NumbersOrganizer extends React.Component{
     this.resetClick(e.target.value);
   }
 
-  resetClick(lastNumber = 10){
+  resetClick(){
+    let lastNumber = this.state.lastNumber;
     this.setState({
       countStrike:0,
       currentReading:1,
