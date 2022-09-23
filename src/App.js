@@ -15,6 +15,10 @@ export default function App() {
             <img src={numberOrganizer} className="App-logo" alt="logo" />
             <span className="text-center font-bold">ترتيب الأرقام</span>
         </Link>
+        <Link to="/Letter-Arranger" className="grid justify-items-center">
+            <img src={numberOrganizer} className="App-logo" alt="logo" />
+            <span className="text-center font-bold">ترتيب الأحرف</span>
+        </Link>
       </div>
     </div>
   );
