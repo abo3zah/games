@@ -151,7 +151,7 @@ export class LetterArranger extends React.Component{
 
   render(){
     return(
-      <div className='w-full grid justify-items-center content-center gap-3 select-none'>
+      <div className='w-full p-6 grid justify-items-center content-center gap-3 select-none'>
         <div className='p-6 grid justify-items-center align-middle md:w-1/3 w-full bg-gray-50 gap-3 rounded outline outline-black'>
             <div className='w-full text-left font-bold'>❌:{this.state.mistake}</div>
             <img src={this.state.levels[this.state.selectedItem].image} className="w-1/2 h-50" alt={this.state.levels[this.state.selectedItem].word}></img>
