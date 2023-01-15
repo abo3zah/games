@@ -4,8 +4,9 @@ import { Routes, Route, HashRouter } from "react-router-dom";
 import './index.css';
 import { TicTacToe } from './routes/tic-tac-toe.js'
 import { NumbersOrganizer } from './routes/numbers-organizer.js'
-import { LetterArranger } from './routes/letterArranger'
+import { LetterArranger } from './routes/letterArranger/letterArranger'
 import App from './app.js'
+
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
