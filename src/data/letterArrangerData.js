@@ -19,4 +19,20 @@ export const letterArrangerData = [
           word:"جمل",
           image:"https://i.pinimg.com/564x/78/ba/c0/78bac0e9ba5f4e656fc429bf47c0f0d2.jpg"
      },
+     {
+          word:"حمار",
+          image:"https://i.pinimg.com/564x/1c/dc/b3/1cdcb383687e31a0e60adf6a66a3dfa5.jpg"
+     },
+     {
+          word:"خباز",
+          image:"https://png.pngtree.com/png-clipart/20210309/original/pngtree-baker-kneading-bread-png-image_5869021.jpg"
+     },
+     {
+          word:"دب",
+          image:"https://i.pinimg.com/originals/8a/f1/7e/8af17e0aa81961219e20b8307ad31fac.png"
+     },
+     {
+          word:"ذئب",
+          image:"https://w7.pngwing.com/pngs/821/43/png-transparent-wolf-white-wolf-snow-wolf-cartoon-wolf.png"
+     },
 ]

@@ -116,7 +116,7 @@ export class LetterArranger extends React.Component{
 
   componentDidMount(){
     let tempLetters = [];
-    let str = "أبتثجحخدذرزسشصضطظعغفقكلمنهويةا"
+    let str = "أبتثجحخدذرزسشصضطظعغفقكلمنهويةائ"
 
     for (let i = 0; i < str.length; i++) {
       tempLetters.push(<LetterComponent key={i} letter={str[i]} action={(i) => this.changeCheck(i)} />);
@@ -127,6 +127,10 @@ export class LetterArranger extends React.Component{
     })
 
     this.updatePuzzle();
+  }
+
+  shouldComponentUpdate(nextProps, nextState){
+    return true;
   }
 
   componentDidUpdate(prevProps, prevState, snapshot){
