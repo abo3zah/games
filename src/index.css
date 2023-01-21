@@ -2,7 +2,8 @@
 @tailwind components;
 @tailwind utilities;
 
-body, body > div {
-  width: 100vw;
-  height: 100vh;
+body,
+body > div {
+    width: 100vw;
+    height: 100vh;
 }
