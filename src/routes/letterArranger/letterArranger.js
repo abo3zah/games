@@ -11,7 +11,7 @@ function LetterPuzzelComponent({ checks, letter }) {
 
 export const LetterArranger = () => {
     // const [score, setScore] = useState(0)
-    const [levels, setLevels] = useState(letterArrangerData);
+    const [levels] = useState(letterArrangerData);
     const [selectedItem, setSelectedItem] = useState(0);
     const [checks, setChecks] = useState(
         Array.from({ length: 3 }, () => false)
@@ -85,17 +85,17 @@ export const LetterArranger = () => {
     }, [selectedItem]);
 
     return (
-        <div className='w-full p-6 grid justify-items-center content-center gap-3 select-none'>
-            <div className='p-6 grid justify-items-center align-middle md:w-1/3 w-full bg-gray-50 gap-3 rounded outline outline-black'>
-                <div className='w-full text-left font-bold'>❌:{mistake}</div>
+        <div className="w-full p-6 grid justify-items-center content-center gap-3 select-none">
+            <div className="p-6 grid justify-items-center align-middle md:w-1/3 w-full bg-gray-50 gap-3 rounded outline outline-black">
+                <div className="w-full text-left font-bold">❌:{mistake}</div>
                 <img
                     src={levels[selectedItem].image}
-                    className='w-1/2 h-50'
+                    className="w-1/2 h-50"
                     alt={levels[selectedItem].word}></img>
                 <div className={`flex flex-wrap gap-3 justify-center text-5xl`}>
                     {letters}
                 </div>
-                <hr className='border border-black w-full' />
+                <hr className="border border-black w-full" />
                 <Keyboard
                     pause={pause}
                     selectedItem={selectedItem}
@@ -103,7 +103,7 @@ export const LetterArranger = () => {
                     changeCheck={changeCheck}
                 />
             </div>
-            <div className='lg:w-1/3 w-full'>
+            <div className="lg:w-1/3 w-full">
                 <ReturnButton />
             </div>
         </div>

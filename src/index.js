@@ -5,6 +5,7 @@ import './index.css';
 import { TicTacToe } from './routes/tic-tac-toe.js';
 import { NumbersOrganizer } from './routes/numbers-organizer.js';
 import { LetterArranger } from './routes/letterArranger/letterArranger';
+import { CountriesFlags } from './routes/CountriesFlags/countriesFlags.js';
 import App from './app.js';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
@@ -12,13 +13,14 @@ root.render(
     <React.StrictMode>
         <HashRouter>
             <Routes>
-                <Route path='/' element={<App />} />
-                <Route path='/Tic-Tac-Toe' element={<TicTacToe />} />
+                <Route path="/" element={<App />} />
+                <Route path="/Tic-Tac-Toe" element={<TicTacToe />} />
                 <Route
-                    path='/Number-Organizer'
+                    path="/Number-Organizer"
                     element={<NumbersOrganizer />}
                 />
-                <Route path='/Letter-Arranger' element={<LetterArranger />} />
+                <Route path="/Letter-Arranger" element={<LetterArranger />} />
+                <Route path="/Countries-Flags" element={<CountriesFlags />} />
             </Routes>
         </HashRouter>
     </React.StrictMode>
