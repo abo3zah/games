@@ -1,18 +1,19 @@
 {
   "files": {
-    "main.css": "/games/static/css/main.a3734d9f.css",
-    "main.js": "/games/static/js/main.a20a8bfa.js",
-    "static/media/celebration.mp3": "/games/static/media/celebration.3498592142c6a444b30b.mp3",
+    "main.css": "/games/static/css/main.a813d894.css",
+    "main.js": "/games/static/js/main.bbf75fc7.js",
     "static/media/correctSound.mp3": "/games/static/media/correctSound.2944938830ac5d97fe17.mp3",
     "static/media/error-sound.mp3": "/games/static/media/error-sound.33a337e55b37aa5226e7.mp3",
+    "static/media/Arabic-Letters.svg": "/games/static/media/Arabic-Letters.86d41dc41daeb735f8ee1165d78d322e.svg",
     "static/media/Number-Organizer.svg": "/games/static/media/Number-Organizer.d7369dbd21b202af67b94d6bf3594b1b.svg",
     "static/media/Tic-Tac-Toe.svg": "/games/static/media/Tic-Tac-Toe.98d6cca38ddca9aae27865c1bdabdacc.svg",
     "index.html": "/games/index.html",
-    "main.a3734d9f.css.map": "/games/static/css/main.a3734d9f.css.map",
-    "main.a20a8bfa.js.map": "/games/static/js/main.a20a8bfa.js.map"
+    "static/media/Countries-Flag.svg": "/games/static/media/Countries-Flag.9fe36b978407e3aae46c7a9fc8558c49.svg",
+    "main.a813d894.css.map": "/games/static/css/main.a813d894.css.map",
+    "main.bbf75fc7.js.map": "/games/static/js/main.bbf75fc7.js.map"
   },
   "entrypoints": [
-    "static/css/main.a3734d9f.css",
-    "static/js/main.a20a8bfa.js"
+    "static/css/main.a813d894.css",
+    "static/js/main.bbf75fc7.js"
   ]
 }
